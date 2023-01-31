@@ -73,7 +73,7 @@ bool MessageBus::IsInit() const { return is_init_; }
 
 MessageBus::~MessageBus() {
   VLOG(3) << "Message bus releases resource.";
-#if defined(PADDLE_WITH_DISTRIBUTE) && defined(PADDLE_WITH_PSCORE)
+#if defined(PADDLE_WITH_DISTRIBUTE)
   server_.Stop(1000);
   server_.Join();
 #endif
@@ -94,7 +94,7 @@ bool MessageBus::Send(int64_t dst_rank,
       true,
       platform::errors::PreconditionNotMet(
           "Using message bus since it has not been initialized."));
-#if defined(PADDLE_WITH_DISTRIBUTE) && defined(PADDLE_WITH_PSCORE)
+#if defined(PADDLE_WITH_DISTRIBUTE)
   int retry_time = 0;  // message bus will retry sending for 10 times
   while (retry_time < 10) {
     ++retry_time;
