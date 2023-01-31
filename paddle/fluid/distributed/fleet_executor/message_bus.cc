@@ -179,7 +179,7 @@ void MessageBus::ListenPort() {
     LOG(INFO) << "No need listen to port since training on single card.";
     return;
   }
-#if defined(PADDLE_WITH_DISTRIBUTE) && defined(PADDLE_WITH_PSCORE)
+#if defined(PADDLE_WITH_DISTRIBUTE)
   // function keep listen the port and handle the message
   PADDLE_ENFORCE_EQ(
       server_.AddService(&message_service_, brpc::SERVER_DOESNT_OWN_SERVICE),
@@ -209,7 +209,7 @@ void MessageBus::ListenPort() {
 #endif
 }
 
-#if defined(PADDLE_WITH_DISTRIBUTE) && defined(PADDLE_WITH_PSCORE)
+#if defined(PADDLE_WITH_DISTRIBUTE)
 bool MessageBus::SendInterRank(int64_t dst_rank,
                                const InterceptorMessage& interceptor_message) {
   const auto& dst_addr = GetAddr(dst_rank);
